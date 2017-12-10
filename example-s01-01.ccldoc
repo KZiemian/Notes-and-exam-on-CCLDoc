@@ -1,0 +1,5 @@
+;;;   -*- Lisp -*-
+
+(:defsection "Function GENSYM"
+  "Something") 	; :defsection nie może być pusty
+;; bo zostanie zwrócony warunek "null clouse [simple-error]"
