@@ -1,5 +1,10 @@
 ;;;   -*- Lisp -*-
 
+
+;; Najpostrzy kod źródłowy CCLDoc
 (:defsection "Function GENSYM"
-  "Something") 	; :defsection nie może być pusty
-;; bo zostanie zwrócony warunek "null clouse [simple-error]"
+  "Something")
+;; (:defsection title &rest subforms) pierwszy string to tytuł potem jest
+;; dowolana ilość podform
+;; :defsection nie może być pusty bo zostanie zwrócony warunek
+;; "null clouse [simple-error]". Nawet pusty string nie przejdzie

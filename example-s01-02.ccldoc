@@ -1,0 +1,8 @@
+;;;   -*- Lisp -*-
+
+
+(:defsection "Function GENSYM"
+  "In some way works"
+  (:listing :definition
+	    (:item "{code :bullet}"
+		   => "gensym &optional x -> new-symbol")))

@@ -1,6 +1,38 @@
 ;;;   -*- Lisp -*-
 
 
+
+;; (in-package :ccldoc)
+
+;; (def-definition-type :ccldoc ()
+;; 		     :type-name "ccldoc operator"
+;; 		     :id-prefix "cd_"
+;; 		     :function #'op-name)
+
+;; (def-expander ccldoc (&optional sym)
+;;   :parser-types (:lisp)
+;;   (if sym
+;;       `(refdef  :ccldoc ,sym)
+;;       "CCLDoc"))
+
+;; (def-expander dspec-types ()
+;;   `(listing :column
+;; 	    ,@(mapcar (lambda (info) `(item (code ,(let ((*print-case* :downcase)) (prin1-to-string (car info))))))
+;; 		      (remove :ccldoc *dspec-types*))))
+
+;; (def-expander docbook-link ()
+;;   '(link "http://docbook.org" "docbook"))
+
+;; (def-expander tracwiki-link ()
+;;   '(link "http://trac.edgewall.org/wiki" "Trac Wiki"))
+
+
+;; ;; Use this package to show explicit packages on unexported symbols...
+;; (defpackage :ccldoc-documentation
+;;   (:use :ccldoc :cl)
+;;   #-:ccl (:shadow :block))
+
+
 (:defsection "Function GENSYM"
     (:defsection "Description"
       "Creates and returns a fresh, uninterned symbol, as if by calling
