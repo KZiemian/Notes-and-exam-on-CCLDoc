@@ -2,7 +2,7 @@
 
 
 
-;; (in-package :ccldoc)
+(in-package :ccldoc)
 
 ;; (def-definition-type :ccldoc ()
 ;; 		     :type-name "ccldoc operator"
@@ -35,7 +35,7 @@
 
 (:defsection "Function GENSYM"
     (:defsection "Description"
-      "Creates and returns a fresh, uninterned symbol, as if by calling
+      "Creates and returns a {param fresh, uninterned symbol}, as if by calling
  make-symbol. (The only difference between gensym and make-symbol is in how
  the new-symbol's name is determined.)
 
@@ -49,3 +49,11 @@
 
   (:defsection "Notes"
     "The ability to pass a numeric argument to gensym has been deprecated; explicitly binding *gensym-counter* is now stylistically preferred. (The somewhat baroque conventions for the optional argument are historical in nature, and supported primarily for compatibility with older dialects of Lisp. In modern code, it is recommended that the only kind of argument used be a string prefix. In general, though, to obtain more flexible control of the new-symbol's name, consider using make-symbol instead.)"))
+
+;; {param text} działa
+;; {code text} działa
+;; {emphasis text} nie daje efektu
+;; Wydaje się, że powyższemu są równoważne
+;; {:param text}
+;; {:code text}
+;; {:emphasis text}
