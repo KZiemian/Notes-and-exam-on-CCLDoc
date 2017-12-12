@@ -19,7 +19,7 @@
 ;; Tworzenie pliku HTML
 
 (progn
-  (defparameter *plik-numer* "04")
+  (defparameter *plik-numer* "05")
   (defparameter *plik-nazwa* (concatenate 'string
 					  +sciezka+
 					  "example-s01-"

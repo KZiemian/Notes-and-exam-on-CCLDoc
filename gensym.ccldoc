@@ -20,7 +20,8 @@
 
   (:defsection "Description"
     "Creates and returns a {param fresh, uninterned symbol}, as if by calling
- make-symbol. (The only difference between gensym and make-symbol is in how
+ {:link http://phoe.tymoon.eu/clus/doku.php?id=cl:functions:make-symbol
+make-symbol}. (The only difference between gensym and make-symbol is in how
  the new-symbol's name is determined.)
 
       The name of the new-symbol is the concatenation of a prefix, which defaults to \"G\", and a suffix, which is the decimal representation of a number that defaults to the value of *gensym-counter*.

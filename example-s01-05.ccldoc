@@ -1,41 +1,59 @@
 ;;;   -*- Lisp -*-
 
 
-(in-package :ccldoc)
+;; (in-package :ccldoc)
 
-(def-definition-type :ccldoc ()
-		     :type-name "ccldoc operator"
-		     :id-prefix "cd_"
-		     :function #'op-name)
+;; (def-definition-type :ccldoc ()
+;; 		     :type-name "ccldoc operator"
+;; 		     :id-prefix "cd_"
+;; 		     :function #'op-name)
 
-(def-expander ccldoc (&optional sym)
-  :parser-types (:lisp)
-  (if sym
-      `(refdef  :ccldoc ,sym)
-      "CCLDoc"))
+;; (def-expander ccldoc (&optional sym)
+;;   :parser-types (:lisp)
+;;   (if sym
+;;       `(refdef  :ccldoc ,sym)
+;;       "CCLDoc"))
 
-(def-expander dspec-types ()
-  `(listing :column
-	    ,@(mapcar (lambda (info) `(item (code ,(let ((*print-case* :downcase)) (prin1-to-string (car info))))))
-		      (remove :ccldoc *dspec-types*))))
+;; (def-expander dspec-types ()
+;;   `(listing :column
+;; 	    ,@(mapcar (lambda (info) `(item (code ,(let ((*print-case* :downcase)) (prin1-to-string (car info))))))
+;; 		      (remove :ccldoc *dspec-types*))))
 
-(def-expander docbook-link ()
-  '(link "http://docbook.org" "docbook"))
+;; (def-expander docbook-link ()
+;;   '(link "http://docbook.org" "docbook"))
 
-(def-expander tracwiki-link ()
-  '(link "http://trac.edgewall.org/wiki" "Trac Wiki"))
+;; (def-expander tracwiki-link ()
+;;   '(link "http://trac.edgewall.org/wiki" "Trac Wiki"))
 
 
-;; Use this package to show explicit packages on unexported symbols...
-(defpackage :ccldoc-documentation
-  (:use :ccldoc :cl)
-  #-:ccl (:shadow :block))
+;; ;; Use this package to show explicit packages on unexported symbols...
+;; (defpackage :ccldoc-documentation
+;;   (:use :ccldoc :cl)
+;;   #-:ccl (:shadow :block))
+
 
 
 (:defsection "Function GENSYM"
-    (:defsection "Description"
-      "Creates and returns a {param fresh, uninterned symbol}, as if by calling
- make-symbol. (The only difference between gensym and make-symbol is in how
+    ;; Gdyby to był string a nie (:defsection ...) byłby wcięty
+    ;; przez Emacsa tak samo jak drugie (:defsection ...). A tak jest
+    ;; wcięty głębiej, nie wiem czemu.
+    (:defsection "Syntax"
+	(:listing :bullet
+		  (:item "{:function gensym} &optional x "
+			 "→ {:emphasis new-symbol}")
+		  (:item "new-symbol - a fresh, uninterned symbol.")))
+
+  (:defsection "Arguments and Values"
+      (:listing :bullet
+		(:item "x - a string or a non-negative integer. "
+		       "Complicated defaulting behaviour; see below.")))
+
+
+
+  (:defsection "Description"
+    "Creates and returns a {param fresh, uninterned symbol}, as if by calling
+ {:link http://phoe.tymoon.eu/clus/doku.php?id=cl:functions:make-symbol
+make-symbol}. (The only difference between gensym and make-symbol is in how
  the new-symbol's name is determined.)
 
       The name of the new-symbol is the concatenation of a prefix, which defaults to \"G\", and a suffix, which is the decimal representation of a number that defaults to the value of *gensym-counter*.
@@ -46,19 +64,57 @@
 
       If and only if no explicit suffix is supplied, *gensym-counter* is incremented after it is used.")
 
+  (:defsection "Example"
+    "CORRET THIS"
+    (:listing :bullet
+	      ;; Jeśli dobrze rozumiem Overview to dwie poniższe pozycje
+	      ;; powinny być równoważne.
+	      (:item (:markup :code "(defparameter *sym1* (gensym))")
+		     (:markup :code "-> #:G3142"))
+	      (:item (:code "(symbol-package *sym1*) -> NIL"))
+	      ;; Poniższy przykład działa jak trzeba, choć się brzydko
+	      ;; formatuje. Zostawiłem go w brzydkiej formie, aby wiedzieć,
+	      ;; że coś takiego może się zdarzyć w Emacsie.
+	      ;; Jego działa nie rozumiem, luką w mojej wiedzy jest
+	      ;; system paczek Common Lispa. Oto opis z Overview który
+	      ;; mnie zagiął. Finally, for convenience, an uninterned symbol is treated the same as a string, providing an alternate syntax (namely #:| ... |) for entering text with many double-quotes.
+	      (:item (:code #:|(defparameter *sym2* (gensym 100)) ->
+#:G100|))))
+
+  (:defsection "Side Effects"
+    "Might increment *gensym-counter*.")
+
+  (:defsection "Affected By"
+    "*gensym-counter*")
+
+  (:defsection "Exceptional Situations"
+    "Should signal an error of type type-error if x is not a string "
+    "or a non-negative integer.")
+
+  (:defsection "See Also"
+      (:listing :bullet
+		(:item "Function GENTEMP")
+		(:item "Variable *GENSYM-COUNTER*")))
 
   (:defsection "Notes"
-    "The ability to pass a numeric argument to gensym has been deprecated; explicitly binding *gensym-counter* is now stylistically preferred. (The somewhat baroque conventions for the optional argument are historical in nature, and supported primarily for compatibility with older dialects of Lisp. In modern code, it is recommended that the only kind of argument used be a string prefix. In general, though, to obtain more flexible control of the new-symbol's name, consider using make-symbol instead.)")
+    "The ability to pass a numeric argument to gensym has been deprecated; explicitly binding *gensym-counter* is now stylistically preferred. (The somewhat baroque conventions for the optional argument are historical in nature, and supported primarily for compatibility with older dialects of Lisp. In modern code, it is recommended that the only kind of argument used be a string prefix. In general, though, to obtain more flexible control of the new-symbol's name, consider using make-symbol instead.)"))
 
 
-  (:defsection "Próba definicji"
 
-      (:definition (:ccldoc :include-file) "(:include-file filename &key in-package external-format)"
-		   ""
-		   "The file {param filename} should consist of any number of lisp forms followed by
-        {CCLDOC} forms.  The lisp forms are processed as if by {code LOAD} until the first {CCLDOC} form
-        is encountered, after which all the remaining forms must be {CCLDOC} forms.  The {CCLDOC} forms are
-        included in the document replacing the {code include-file} form itself.
-        The {param in-package} parameter can be used to specify the package used to load the file,
-        and is entirely equivalent to placing an {code in-package} form at the start of the included file.
-        {param external-format} specifies the character encoding of the file")))
+
+;; {param text} działa
+;; {code text} działa
+;; {emphasis text} działa, w sensie nie zwraca błędu, alenie daje żadnego
+;; obserwowalnego efektu
+;; Ze względu na zamienianie operatorów na keywordsy są one równoważne
+;; następujący komendom
+;; {:param text}
+;; {:code text}
+;; {:emphasis text}
+
+
+;; Linki wspierają embeded string syntax, co oznacza, że można napisać
+;; "link do {:link http://phoe.tymoon.eu/clus/doku.php?id=cl:functions:make-symbol make-symbol}"
+;; zamiast
+;; "link do " (:link http://phoe.tymoon.eu/clus/doku.php?id=cl:functions:make-symbol make-symbol)
+;; A przynajmniej mi się tak wydaje, że tak należy drugiej formy używać.
