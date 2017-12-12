@@ -51,6 +51,9 @@
 
 
   (:defsection "Description"
+    ;; Jeśli mamy "{:link http... make-symbol}." to w tekście jest
+    ;; make-symbol . Jeśli zaś dam "{:link http... make-symbol.}" to kropka
+    ;; jest częścią hiperlinku. Żadne rozwiązanie nie jest satysfakcjonujące.
     "Creates and returns a {param fresh, uninterned symbol}, as if by calling
  {:link http://phoe.tymoon.eu/clus/doku.php?id=cl:functions:make-symbol
 make-symbol}. (The only difference between gensym and make-symbol is in how
