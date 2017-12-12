@@ -49,10 +49,12 @@
   (:defsection "Notes"
     "The ability to pass a numeric argument to gensym has been deprecated; explicitly binding *gensym-counter* is now stylistically preferred. (The somewhat baroque conventions for the optional argument are historical in nature, and supported primarily for compatibility with older dialects of Lisp. In modern code, it is recommended that the only kind of argument used be a string prefix. In general, though, to obtain more flexible control of the new-symbol's name, consider using make-symbol instead.)")
 
-  (:definition (:function :include-file) "(:include-file filename &key in-package external-format)" ; To działa, jeśli jednak zmieni się :function na
+  (:definition (:function include-file) "(include-file filename &key in-package external-format)" ; To działa, jeśli jednak zmieni się :function na
 	       ;; :ccldoc wówczas pojawi się błąd.
 	       ;; :ccldoc zacznie działać jeśli odkomentuje się formy CL
 	       ;; na początku pliku
+	       ;; (:function :include-file) "(:include-file filename &key in-package external-format)"
+	       ;; Taka forma też działa, jest bardziej w stylu Overview
 	       "Jeden"
 	       "Dwa"
 	       "Trzy" ;; Wstawianie kolejnego stringu jest bez sensu.

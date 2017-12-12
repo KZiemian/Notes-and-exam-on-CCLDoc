@@ -19,16 +19,17 @@
 ;; Tworzenie pliku HTML
 
 (progn
-  (defparameter *plik-numer* "03")
+  (defparameter *plik-numer* "04")
   (defparameter *plik-nazwa* (concatenate 'string
 					  +sciezka+
 					  "example-s01-"
-					  *plik-numer*))
+					  *plik-numer*)))
+
+(progn
   (defparameter *document* (let ((*package* *package*))
 			     (ccldoc::load-document (concatenate 'string
 								 *plik-nazwa*
 								 ".ccldoc"))))
-
   (ccldoc::output-html *document* (concatenate 'string
 					       *plik-nazwa*
 					       ".html")
@@ -63,7 +64,9 @@
 				     "gensym.ccldoc"))
   (defvar *plik-html* (concatenate 'string
 				   +sciezka+
-				   "gensym.html"))
+				   "gensym.html")))
+
+(progn
   (defparameter *document* (let ((*package* *package*))
 			     (ccldoc::load-document *plik-ccldoc*)))
 

@@ -2,8 +2,24 @@
 
 
 (:defsection "Function GENSYM"
-    (:defsection "Description"
-      "Creates and returns a fresh, uninterned symbol, as if by calling
+    ;; Gdyby to był string a nie (:defsection ...) byłby wcięty
+    ;; przez Emacsa tak samo jak drugie (:defsection ...). A tak jest
+    ;; wcięty głębiej, nie wiem czemu.
+    (:defsection "Syntax"
+	(:listing :bullet
+		  (:item "{:function gensym} &optional x "
+			 "→ {:emphasis new-symbol}")
+		  (:item "new-symbol - a fresh, uninterned symbol.")))
+
+  (:defsection "Arguments and Values"
+      (:listing :bullet
+		(:item "x - a string or a non-negative integer. "
+		       "Complicated defaulting behaviour; see below.")))
+
+
+
+  (:defsection "Description"
+    "Creates and returns a {param fresh, uninterned symbol}, as if by calling
  make-symbol. (The only difference between gensym and make-symbol is in how
  the new-symbol's name is determined.)
 
@@ -14,6 +30,38 @@
       If x is supplied, and is an integer, then that integer, instead of the value of *gensym-counter*, is used as the suffix for this call to gensym only.
 
       If and only if no explicit suffix is supplied, *gensym-counter* is incremented after it is used.")
+
+  (:defsection "Example"
+    "CORRET THIS"
+    (:listing :bullet
+	      ;; Jeśli dobrze rozumiem Overview to dwie poniższe pozycje
+	      ;; powinny być równoważne.
+	      (:item (:markup :code "(defparameter *sym1* (gensym))")
+		     (:markup :code "-> #:G3142"))
+	      (:item (:code "(symbol-package *sym1*) -> NIL"))
+	      ;; Poniższy przykład działa jak trzeba, choć się brzydko
+	      ;; formatuje. Zostawiłem go w brzydkiej formie, aby wiedzieć,
+	      ;; że coś takiego może się zdarzyć w Emacsie.
+	      ;; Jego działa nie rozumiem, luką w mojej wiedzy jest
+	      ;; system paczek Common Lispa. Oto opis z Overview który
+	      ;; mnie zagiął. Finally, for convenience, an uninterned symbol is treated the same as a string, providing an alternate syntax (namely #:| ... |) for entering text with many double-quotes.
+	      (:item (:code #:|(defparameter *sym2* (gensym 100)) ->
+#:G100|))))
+
+  (:defsection "Side Effects"
+    "Might increment *gensym-counter*.")
+
+  (:defsection "Affected By"
+    "*gensym-counter*")
+
+  (:defsection "Exceptional Situations"
+    "Should signal an error of type type-error if x is not a string "
+    "or a non-negative integer.")
+
+  (:defsection "See Also"
+      (:listing :bullet
+		(:item "Function GENTEMP")
+		(:item "Variable *GENSYM-COUNTER*")))
 
   (:defsection "Notes"
     "The ability to pass a numeric argument to gensym has been deprecated; explicitly binding *gensym-counter* is now stylistically preferred. (The somewhat baroque conventions for the optional argument are historical in nature, and supported primarily for compatibility with older dialects of Lisp. In modern code, it is recommended that the only kind of argument used be a string prefix. In general, though, to obtain more flexible control of the new-symbol's name, consider using make-symbol instead.)"))
